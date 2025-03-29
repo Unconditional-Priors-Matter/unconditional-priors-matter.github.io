@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XE4HTS2YMF"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XE4HTS2YMF');
+    </script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Unconditional Priors Matter! Improving Conditional Generation of Fine-Tuned Diffusion Models</title>
+
+    <meta property='og:title' content='Unconditional Priors Matter. arXiv2025'/>
+    <meta property='og:url' content='https://unconditional-priors-matter.github.io/'/>
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/menlo" rel="stylesheet">
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="stylesheet" href="./static/css/tab_gallery.css">
+    <link rel="stylesheet" href="./static/css/image_card_fader.css">
+    <link rel="stylesheet" href="./static/css/image_card_slider.css">
+    <link rel="icon" href="./static/images/rbf.ico">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+    <script src="./static/js/magnifier.js"></script>
+    <script type="text/javascript" async
+        src="https://polyfill.io/v3/polyfill.min.js?features=es6">
+    </script>
+    <script type="text/javascript" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+    <section class="hero banner">
+        <div class="hero-body">
+            <div class="container is-max-desktop">
+                <div class="columns is-centered">
+                    <div class="column has-text-centered">
+                        <h1 class="title is-2 publication-title"><em>Unconditional Priors Matter!</em> <br> Improving Conditional Generation of Fine-Tuned Diffusion Models </h1>
+                        <div class="is-size-5 publication-authors">
+                            <span class="author-block">
+                                <a href="https://github.com/puzzlingConundrum">Prin Phunyaphibarn</a>
+                            </span>
+                            <span class="author-block">
+                                <a href="https://github.com/phillipinseoul">Phillip Y. Lee</a>
+                            </span>
+                            <span class="author-block">
+                                <a href="https://jh27kim.github.io/">Jaihoon Kim</a>
+                            </span>
+                            <span class="author-block">
+                                <a href="https://mhsung.github.io/">Minhyuk Sung</a>
+                            </span>
+                        </div>
+                        
+                        <div class="publication-institution">KAIST</div>                        
+                      
+                        <div class="publication-links">
+                            <span class="link-block">
+                                <a href="https://unconditional-priors-matter.github.io/static/unconditional-priors-matter.pdf" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </span>
+                                    <span>Paper</span>
+                                </a>
+                            </span>
+                            <span class="link-block">
+                                <a href="https://arxiv.org/abs/2503.20240" class="external-link button is-normal is-rounded is-dark">
+                                    <span class="icon">
+                                        <i class="ai ai-arxiv"></i>
+                                    </span>
+                                    <span>arXiv</span>
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <div class="content has-text-centered">
+        <video width="70%" autoplay muted loop playsinline controls>
+            <source src="./static/images/demo.mp4" type="video/mp4">
+        </video>
+    </div> -->
+
+
+    <section class="hero is-light is-small">
+        <div class="hero-body">
+            <!-- <h2 class="title is-3 has-text-centered">tl; dr</h2> -->
+            <div class="container is-max-desktop has-text-centered">
+                <h3 class="title is-5">TL;DR: A simple yet effective method of improving fine-tuned diffusion models by leveraging the unconditional priors from its base model.</h3> 
+                <div class="content has-text-centered">
+                    <img src="./static/images/teaser.jpg" class="interpolation-image"/>
+                </div>
+                Fine-tuned conditional diffusion models often show drastic degradation in their unconditional priors, adversely affecting conditional generation when using techniques such as CFG. 
+                We demonstrate that leveraging a diffusion model with a richer unconditional prior and combining its unconditional noise prediction with the conditional noise prediction from the fine-tuned model can lead to substantial improvements in conditional generation quality. 
+                This is demonstrated across diverse conditional diffusion models including Zero-1-to-3, Versatile Diffusion, InstructPix2Pix, and DynamiCrafter.
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">Abstract</h2>
+            <div class="columns is-centered">
+                <div class="column is-four-fifths">
+                    <div class="content has-text-justified">
+                        <p>
+                            Classifier-Free Guidance (CFG) is a fundamental technique in training conditional diffusion models. 
+                            The common practice for CFG-based training is to use a single network to learn both conditional and unconditional noise prediction, with a small dropout rate for conditioning. 
+                            However, we observe that the joint learning of unconditional noise with limited bandwidth in training results in poor priors for the unconditional case. 
+                            More importantly, these poor unconditional noise predictions become a serious reason for degrading the quality of conditional generation. 
+                            Inspired by the fact that most CFG-based conditional models are trained by fine-tuning a base model with better unconditional generation, 
+                            we first show that simply replacing the unconditional noise in CFG with that predicted by the base model can significantly improve conditional generation. 
+                            Furthermore, we show that a diffusion model other than the one the fine-tuned model was trained on can be used for unconditional noise replacement. 
+                            We experimentally verify our claim with a range of CFG-based conditional models for both image and video generation, including Zero-1-to-3, Versatile Diffusion, DiT, DynamiCrafter, and InstructPix2Pix.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">💡 Main Idea</h2>
+            <h3 class="title is-4">Poor Unconditional Priors Affect Conditional Generation</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/unconditional_samples.jpg" width="100%">
+            </div>
+            <div class="content has-text-justified">
+                Classifier-Free Guidance (CFG) jointly models the unconditional and conditional noise predictions using a <em>single</em> noise prediction network 
+                by randomly dropping the condition according to a small drop rate (typically 5~20%). 
+                At inference time, CFG uses a linear combination of unconditional and conditional noises to perform sampling.
+                Although CFG is commonly used to fine-tune existing large-scale diffusion models to incorporate new types of input conditions, 
+                CFG fine-tuning significantly degrades the quality of its unconditional generation which in turn also affects the quality of conditional generation:
+                <strong>while the <span style="color:#35787B; font-weight:bold">base model</span> (that the fine-tuned model is fine-tuned from) exhibits high quality unconditional samples, 
+                the unconditional samples from the fine-tuned models are low quality and lack semantic information</strong>.
+            </div>
+            <h3 class="title is-4">Finding Richer Unconditional Priors</h3>
+            <div class="content has-text-justified">
+                <strong>Can we improve the quality of conditional generation by incorporating better unconditional priors during sampling?</strong>
+                We already have access to a diffusion model with reliable unconditional priors: the <span style="color:#35787B; font-weight:bold">base model</span> it was fine-tuned from.
+                we propose a simple yet effective fix: combining the unconditional noise prediction from the <span style="color:#35787B; font-weight:bold">base model</span> with the conditional noise prediction from the fine-tuned model.
+            </div>
+            <div class="content has-text-centered">
+                <img src="./static/images/method.jpg" width="100%">
+            </div>
+            <!--  -->
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">🖼️ Qualitative Results</h2>
+            <div class="content has-text-centered">
+                <h3 class="title is-5">
+                    Our method improves the quality of various fine-tuned diffusion models across different tasks.
+                </h3>
+            </div>
+            <h3 class="title is-4 has-text-centered">👁️ Novel View Synthesis: Zero-1-to-3 [1]</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/zero123_qualitatives.jpg" width="100%">
+            </div>
+            <!--  -->
+            <h3 class="title is-4 has-text-centered">🏞️ Image Variation: Versatile Diffusion [2]</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/vdiv_qualitatives.jpg" width="100%">
+            </div>
+            <!--  -->
+            <h3 class="title is-4 has-text-centered">📊 Class Conditional Generation: Fine-tuned DiT [3]</h3>
+            <div class="content has-text-justified">
+                <p>
+                    
+                </p>
+            </div>
+            <div class="content has-text-centered">
+                <img src="./static/images/DiT_qualitatives.jpg" width="100%">
+            </div>
+            <!--  -->
+            <h3 class="title is-4 has-text-centered">🎥 Video Generation: DynamiCrafter [4]</h3>
+
+            <style> .third { width: 33.33%; float: left; margin-bottom: 2em;} </style>
+
+            <div class="third has-text-centered"> <strong>Prompt</strong> </div>
+            <div class="third has-text-centered"> <strong>DynamiCrafter</strong> </div>
+            <div class="third has-text-centered"> <strong>Ours</strong> </div>
+
+            <div class="third has-text-centered" height="256px">
+                <p style="display: table-cell; height: 256px; text-align: center; vertical-align: middle;">
+                    <TT>"A woman carrying a bundle of plants over their head.”</TT>
+                </p>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/baseline_plant.mp4"/>
+                </video>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/ours_plant.mp4"/>
+                </video>
+            </div>
+
+            <div class="third">
+                <p style="display: table-cell; height: 256px; text-align: center; vertical-align: middle;">
+                    <TT>"A group of people riding bikes down a street.”</TT>
+                </p>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/baseline_bike.mp4"/>
+                </video>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/ours_bike.mp4"/>
+                </video>
+            </div>
+
+            <div class="third has-text-centered">
+                <p style="display: table-cell; height: 256px; text-align: center; vertical-align: middle;">
+                    <TT>"A man in a black suit and a sombrero, shouting loudly.”</TT>
+                </p>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/baseline_sombrero.mp4"/>
+                </video>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/ours_sombrero.mp4"/>
+                </video>
+            </div>
+
+            <!--  -->
+            <h3 class="title is-4 has-text-centered">✂️ Image Editing: InstructPix2Pix [5]</h3>
+            <div class="content has-text-justified">
+                <p>
+                    
+                </p>
+            </div>
+            <div class="content has-text-centered">
+                <img src="./static/images/ip2p_qualitatives.jpg" width="100%">
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">✨ Additional Qualitative Results</h2>
+
+            <h3 class="title is-4 has-text-centered">Zero-1-to-3</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/zero123_supp_qualitatives.jpg" class="interpolation-image" />
+            </div>
+
+            <h3 class="title is-4 has-text-centered">Versatile Diffusion</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/vdiv_supp_qualitatives.jpg" class="interpolation-image" />
+            </div>
+
+            <h3 class="title is-4 has-text-centered">DynamiCrafter</h3>
+
+            <div class="third has-text-centered"> <strong>Prompt</strong> </div>
+            <div class="third has-text-centered"> <strong>DynamiCrafter</strong> </div>
+            <div class="third has-text-centered"> <strong>Ours</strong> </div>
+
+            <div class="third has-text-centered" height="256px">
+                <p style="display: table-cell; height: 256px; text-align: center; vertical-align: middle;">
+                    <TT>"A couple of horses are running in the dirt.”</TT>
+                </p>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/baseline_horse.mp4"/>
+                </video>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/ours_horse.mp4"/>
+                </video>
+            </div>
+
+            <div class="third has-text-centered" height="256px">
+                <p style="display: table-cell; height: 256px; text-align: center; vertical-align: middle;">
+                    <TT>"A man sitting on steps playing an acoustic guitar.”</TT>
+                </p>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/baseline_guitar.mp4"/>
+                </video>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/ours_guitar.mp4"/>
+                </video>
+            </div>
+
+            <div class="third has-text-centered" height="256px">
+                <p style="display: table-cell; height: 256px; text-align: center; vertical-align: middle;">
+                    <TT>"Two women eating pizza at a restaurant.”</TT>
+                </p>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/baseline_pizza.mp4"/>
+                </video>
+            </div>
+            <div class="third">
+                <video controls width="256">
+                    <source src="./static/videos/ours_pizza.mp4"/>
+                </video>
+            </div>
+
+            <h3 class="title is-4 has-text-centered">InstructPix2Pix</h3>
+            <div class="content has-text-centered">
+                <img src="./static/images/ip2p_supp_qualitatives.jpg" class="interpolation-image" />
+            </div>
+
+          </div>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">Acknowledgement</h2>
+            <div class="content has-text-justified">
+                <p>
+                    We thank <a href="https://63days.github.io/"> Juil Koo</a> for providing constructive feedback of our manuscript.
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-max-desktop">
+            <h2 class="title is-3 has-text-centered">References</h2>
+            [1] <a href="https://arxiv.org/abs/2303.11328">Zero-1-to-3: Zero-shot One Image to 3D Object, Liu et al., ICCV 2023</a> <br>
+            [2] <a href="https://arxiv.org/abs/2211.08332">Versatile Diffusion: Text, Images and Variations All in One Diffusion Model, Xu et al., ICCV 2023</a> <br>
+            [3] <a href="https://arxiv.org/abs/2212.09748">Scalable Diffusion Models with Transformers, Peebles and Xie, ICCV 2023 (Oral)</a> <br>
+            [4] <a href="https://arxiv.org/abs/2310.12190">DynamiCrafter: Animating Open-domain Images with Video Diffusion Priors, Xing et al., ECCV 2024 (Oral)</a> <br>
+            [5] <a href="https://arxiv.org/abs/2211.09800">InstructPix2Pix: Learning to Follow Image Editing Instructions, Brooks et al., CVPR 2023 (Highlight)</a>
+          </div>
+        </div>
+    </section>
+
+
+
+    <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+        <h2 class="title"><a id="bibtex">BibTeX</a></h2>
+        <pre style="white-space: pre-wrap;"><code>@misc{phunyaphibarn2025unconditionalpriorsmatterimproving,
+            title={Unconditional Priors Matter! Improving Conditional Generation of Fine-Tuned Diffusion Models}, 
+            author={Prin Phunyaphibarn and Phillip Y. Lee and Jaihoon Kim and Minhyuk Sung},
+            year={2025},
+            eprint={2503.20240},
+            archivePrefix={arXiv},
+            primaryClass={cs.CV},
+            url={https://arxiv.org/abs/2503.20240}, 
+      }</code></pre>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class="column is-8">
+                    <div class="content">
+                        <p>
+                            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+                        </p>
+                        <p>
+                            Website adapted from <a href="https://github.com/nerfies/nerfies.github.io">nerfies</a> and <a href="https://joonghyuk.com/instantdrag-web/">InstantDrag</a>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
