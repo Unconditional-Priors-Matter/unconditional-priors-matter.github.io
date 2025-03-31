@@ -158,11 +158,19 @@
                 <strong>Can we improve the quality of conditional generation by incorporating better unconditional priors during sampling?</strong>
                 We already have access to a diffusion model with reliable unconditional priors: the <span style="color:#35787B; font-weight:bold">base model</span> it was fine-tuned from.
                 We propose a simple yet effective fix: combining the unconditional noise prediction from the <span style="color:#35787B; font-weight:bold">base model</span> with the conditional noise prediction from the fine-tuned model.
+                This simple modification results in significant improvements in the output quality of conditional generation.
             </div>
             <div class="content has-text-centered">
                 <img src="./static/images/method.jpg" width="100%">
             </div>
             <!--  -->
+            <h3 class="title is-4">Choice of Unconditional Prior</h3>
+            <div class="content has-text-justified">
+                <strong>Should the unconditional noise come from the base model or from another unconditional model?</strong>
+                Notably, we find that the base model does not necessarily need to the be the true base model from which the new conditional model was fine-tuned from, 
+                but can instead be another diffusion model with good unconditional priors. In our experiments, even though some models have been fine-tuned from <TT>SD1.x</TT>,
+                using the unconditional predictions of <TT>SD2.1</TT> or even <TT>PixArt-α</TT> (which is a DiT rather than a UNet) results in improvements as well.
+            </div>
         </div>
     </section>
 
